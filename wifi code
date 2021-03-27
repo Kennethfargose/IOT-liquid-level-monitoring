@@ -1,0 +1,104 @@
+if(!sent){
+
+// put your main code here, to run repeatedly:
+//String req= &quot;GET
+/update?api_key=QKUHY885TWKUOW3W&amp;field1=&quot;+String(distance)+&quot;\r\n&quot;;
+//String dis=String(distance);
+//String e=&quot;\n\r&quot;;
+//String freq=req+distance;
+Serial.println(req);
+//freq=freq+e;
+//String req=&quot;GET
+/update?api_key=SP44B56BIIZVGWKO&amp;field2=7350197400 HTTP/1.1\r\nHost:
+IOT\r\nConnection: close\r\n\r\n&quot;;
+//printResponse();
+Serial1.println(&quot;AT+CIPSTART=\&quot;TCP\&quot;,\&quot;api.thingspeak.com\&quot;,80\r\n\r\n&quot;);
+
+delay(1000);
+
+Serial.print(&quot;Response of AT+CIPSTART:&quot;);
+printResponse();
+Serial.println(response);
+
+Serial1.println(&quot;AT+CIPSEND=&quot; + String(req.length())+&quot;\r\n&quot;);
+
+delay(3000);
+
+Serial.print(&quot;Response of AT+CIPSEND:&quot;);
+printResponse();
+Serial.println(response);
+
+if(response.indexOf(&quot;&gt;&quot;)&gt;0){
+Serial1.println(req);
+Serial1.println();
+delay(6000);
+
+Serial.print(&quot;Response of Request&quot;);
+printResponse();
+Serial.println(response);
+
+if(response.indexOf(&quot;+IPD&quot;)&gt;0){
+sent=true;
+ok();
+}
+else
+stop();
+
+}else
+
+stop();
+
+}//end of sent if
+
+delay(2000);
+}
+
+boolean connectWIFI(){
+Serial1.println(&quot;AT&quot;);
+delay(1000);
+
+printResponse();
+Serial.print(&quot;Response of AT:&quot;);
+Serial.println(response);
+if(response.indexOf(&quot;OK&quot;)&gt;0){
+Serial.println(&quot;CONNECTION IS OK&quot;);
+Serial1.println(&quot;AT+CWMODE=1&quot;);
+delay(2000);
+Serial.print(&quot;Response of AT+CWMODE=1:&quot;);
+printResponse();
+Serial.println(response);
+Serial1.println(&quot;AT+CWJAP=\&quot;Pixel_5853\&quot;,\&quot;Dhananjay@10\&quot;&quot;);
+delay(5000);
+Serial.print(&quot;Response of AT+CWJAP:&quot;);
+printResponse();
+
+Serial.println(response);
+if(response.indexOf(&quot;OK&quot;)&gt;0){
+Serial.println(&quot;WIFI-CONNECTED&quot;);
+}else{
+stop();
+}
+}else{
+stop();
+}
+
+}
+
+void stop(){
+error=true;
+Serial.print(&quot;Error&quot;);
+//digitalWrite(OK_LED,LOW);
+//digitalWrite(ERROR_LED,HIGH);
+}
+
+void ok(){
+error=false;
+// digitalWrite(ERROR_LED,LOW);
+// digitalWrite(OK_LED,HIGH);
+}
+
+void printResponse() {
+while (Serial1.available()) {
+response += Serial1.readString();
+}
+}
