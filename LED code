@@ -1,0 +1,10 @@
+void setup() {
+pinMode(LED_BUILTIN, OUTPUT); // initialize digital pin LED_BUILTIN as an output.
+Serial.begin(9600);
+}
+void loop() {
+digitalWrite(LED_BUILTIN, HIGH); // turn the LED on (HIGH is the voltage level)
+Serial.println(&quot;1&quot;);
+digitalWrite(LED_BUILTIN, LOW); // turn the LED off by making the voltage LOW
+Serial.println(&quot;0&quot;);
+}
