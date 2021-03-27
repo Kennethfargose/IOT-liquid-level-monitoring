@@ -1,0 +1,30 @@
+digitalWrite(TRIG, LOW);
+delayMicroseconds(2);
+// Sets the trigPin on HIGH state for 10 micro seconds
+digitalWrite(TRIG, HIGH);
+
+delayMicroseconds(10);
+digitalWrite(TRIG, LOW);
+// Reads the echoPin, returns the sound wave travel time in microseconds
+duration = pulseIn(ECHO, HIGH);
+// Calculating the distance
+distance= duration*0.034/2;
+Serial.print(&quot;DISTANCE IS :&quot;);
+Serial.println(distance);
+
+if(distance &lt; 20){
+
+sent=false;
+
+req= &quot;GET
+/update?api_key=QKUHY885TWKUOW3W&amp;field1=&quot;+String(distance)+&quot;\r\n&quot;;
+if(distance &lt; 5 &amp;&amp; notify){
+digitalWrite(OVERFLOW,HIGH);
+req= &quot;GET
+/update?api_key=SP44B56BIIZVGWKO&amp;field1=&quot;+String(distance)+&quot;\r\n&quot;;
+}else{
+Serial.println(&quot;Closing&quot;);
+digitalWrite(OVERFLOW,LOW);
+}
+
+}
